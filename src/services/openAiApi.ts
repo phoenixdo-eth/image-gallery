@@ -81,11 +81,19 @@ export async function generateCaptionsWithOpenAI(
     });
 
     // Safe check: Ensure content is available
-    const content = response.content?.[0]?.text;
+    // Check if content exists and access the text property safely
+    const contentBlock = response.content?.[0];
+    let content = '';
+
+    // Type guard to check if the content block has a text property
+    if (contentBlock && 'text' in contentBlock) {
+      content = contentBlock.text;
+    }
+
     console.log("print content: ", content);
-    
+
     if (!content) {
-      throw new Error("No response from Claude");
+      throw new Error("No text response from Claude");
     }
     
     return content;
