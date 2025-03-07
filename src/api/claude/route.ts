@@ -75,14 +75,14 @@ export async function POST(request: NextRequest) {
     }
     
     // Fallback if regex parsing didn't work
-    if (captions.filter(Boolean).length < images.length) {
-      const paragraphs = responseText
-        .split('\n\n')
-        .filter(para => para.trim().length > 0);
-      
-      // Update the captions array instead of directly returning
-      captions = paragraphs.slice(0, images.length).map(p => p.trim());
-    }
+  if (captions.filter(Boolean).length < images.length) {
+    const paragraphs = responseText
+      .split('\n\n')
+      .filter((para: string) => para.trim().length > 0);
+    
+    // Update the captions array instead of directly returning
+    captions = paragraphs.slice(0, images.length).map((p: string) => p.trim());
+  }
     
     return NextResponse.json({ captions });
   } catch (error) {
